@@ -1,0 +1,68 @@
+CREATE DATABASE [Library]
+
+GO
+
+USE [Library]
+
+GO
+
+CREATE TABLE [dbo].[Library](
+	LibraryId INT NOT NULL PRIMARY KEY IDENTITY,
+	[Name] NVARCHAR(26) NOT NULL,
+	NumberOfMembers NVARCHAR(26) NOT NULL,
+	[Address] NVARCHAR(500),
+)
+
+GO
+
+CREATE TABLE [dbo].Book(
+	BookId INT NOT NULL PRIMARY KEY IDENTITY,
+	[Name] NVARCHAR(50) NOT NULL,
+	ISBN NVARCHAR(26) NOT NULL,
+	Publisher NVARCHAR(26) NOT NULL,
+	Writer NVARCHAR(26) NOT NULL,
+	Translator NVARCHAR(26)
+)
+
+GO
+
+CREATE TABLE [dbo].Member(
+	MemberId INT NOT NULL PRIMARY KEY IDENTITY,
+	FirstName NVARCHAR(26) NOT NULL,
+	LastName NVARCHAR(26) NOT NULL,
+	TelephoneNumber VARCHAR(11) NOT NULL,
+)
+
+GO
+
+CREATE TABLE [dbo].Membership(
+	LibraryId INT NOT NULL FOREIGN KEY REFERENCES [Library](LibraryId),
+	MemberId INT NOT NULL FOREIGN KEY REFERENCES Member(MemberId),
+	RegDate DATETIME NOT NULL DEFAULT(GETDATE()),
+	ExpDate DateTime NOT NULL DEFAULT(DATEADD(MONTH, 6, GETDATE()))
+)
+GO
+
+CREATE TABLE [dbo].Exist(
+	BookId INT NOT NULL FOREIGN KEY REFERENCES Book(BookId),
+	LibraryId INT NOT NULL FOREIGN KEY REFERENCES [Library](LibraryId),
+	Number INT NOT NULL DEFAULT(0)
+);
+
+GO
+
+CREATE UNIQUE INDEX uq_Exist
+	ON [dbo].Exist(BookId, LibraryId);
+
+GO
+
+CREATE TABLE [dbo].Borrow(
+	LibraryId INT NOT NULL FOREIGN KEY REFERENCES [Library](LibraryId),
+	BookId INT NOT NULL FOREIGN KEY REFERENCES Book(BookId),
+	MemberId INT NOT NULL FOREIGN KEY REFERENCES Member(MemberId)
+);
+
+CREATE UNIQUE INDEX uq_Borrow
+	ON [dbo].Borrow(LibraryId, BookId, MemberId);
+
+GO
