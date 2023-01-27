@@ -164,6 +164,23 @@ SELECT TOP(1) @MID = MemberId From @MEMBERS ORDER BY NEWID()
 INSERT INTO [dbo].Membership (LibraryId, MemberId, RegDate, ExpDate)
 VALUES (@LID, @MID, GETDATE(), DATEADD(MONTH, 12, GETDATE()))
 
+SELECT TOP(1) @LID = LibraryId From @LIBRARYID ORDER BY NEWID()
+DELETE @LIBRARYID WHERE LibraryId = @LID
+SELECT TOP(1) @MID = MemberId From @MEMBERS ORDER BY NEWID()
+
+INSERT INTO [dbo].Membership (LibraryId, MemberId, RegDate, ExpDate)
+VALUES (@LID, @MID, GETDATE(), DATEADD(MONTH, 12, GETDATE()))
+
+SELECT TOP(1) @MID = MemberId From @MEMBERS ORDER BY NEWID()
+
+INSERT INTO [dbo].Membership (LibraryId, MemberId, RegDate, ExpDate)
+VALUES (@LID, @MID, GETDATE(), DATEADD(MONTH, 12, GETDATE()))
+
+SELECT TOP(1) @MID = MemberId From @MEMBERS ORDER BY NEWID()
+
+INSERT INTO [dbo].Membership (LibraryId, MemberId, RegDate, ExpDate)
+VALUES (@LID, @MID, GETDATE(), DATEADD(MONTH, 12, GETDATE()))
+
 GO
 
 DECLARE @LIBRARY TABLE(LibraryId INT);
@@ -270,34 +287,54 @@ INSERT INTO @MEMBER SELECT M.MemberId FROM [dbo].[Library] AS L
 	ON M.LibraryId = L.LibraryId
 	WHERE L.LibraryId = @LID
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
 
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
-
-INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
-VALUES (@LID, @BID, @MID)
-
-SELECT TOP(1) @BID = BookId From @BOOK ORDER BY NEWID()
-SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
-
-INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
-VALUES (@LID, @BID, @MID)
-
-SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
 
 SELECT TOP(1) @BID = BookId From @BOOK ORDER BY NEWID()
+INSERT INTO @MEMBER SELECT M.MemberId FROM [dbo].[Library] AS L
+	INNER JOIN [dbo].Membership AS M
+	ON M.LibraryId = L.LibraryId
+	WHERE L.LibraryId = @LID
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
+
+INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
+VALUES (@LID, @BID, @MID)
+
+SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
+
+INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
+VALUES (@LID, @BID, @MID)
+
+SELECT TOP(1) @BID = BookId From @BOOK ORDER BY NEWID()
+INSERT INTO @MEMBER SELECT M.MemberId FROM [dbo].[Library] AS L
+	INNER JOIN [dbo].Membership AS M
+	ON M.LibraryId = L.LibraryId
+	WHERE L.LibraryId = @LID
+SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
 
 SELECT TOP(1) @LID = LibraryId From @LIBRARY ORDER BY NEWID()
 DELETE @LIBRARY WHERE LibraryId = @LID
+
+INSERT INTO @MEMBER SELECT M.MemberId FROM [dbo].[Library] AS L
+	INNER JOIN [dbo].Membership AS M
+	ON M.LibraryId = L.LibraryId
+	WHERE L.LibraryId = @LID
+SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO @BOOK SELECT B.BookId FROM [dbo].Book AS B
 	INNER JOIN [dbo].Exist AS E
@@ -309,39 +346,60 @@ INSERT INTO @MEMBER SELECT M.MemberId FROM [dbo].[Library] AS L
 	ON M.LibraryId = L.LibraryId
 	WHERE L.LibraryId = @LID
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
 
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
-
-INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
-VALUES (@LID, @BID, @MID)
-
-SELECT TOP(1) @BID = BookId From @BOOK ORDER BY NEWID()
-SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
-
-INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
-VALUES (@LID, @BID, @MID)
-
-SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
 
 SELECT TOP(1) @BID = BookId From @BOOK ORDER BY NEWID()
+INSERT INTO @MEMBER SELECT M.MemberId FROM [dbo].[Library] AS L
+	INNER JOIN [dbo].Membership AS M
+	ON M.LibraryId = L.LibraryId
+	WHERE L.LibraryId = @LID
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
 
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
+
+INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
+VALUES (@LID, @BID, @MID)
+
+SELECT TOP(1) @BID = BookId From @BOOK ORDER BY NEWID()
+INSERT INTO @MEMBER SELECT M.MemberId FROM [dbo].[Library] AS L
+	INNER JOIN [dbo].Membership AS M
+	ON M.LibraryId = L.LibraryId
+	WHERE L.LibraryId = @LID
+SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
+
+INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
+VALUES (@LID, @BID, @MID)
+
+SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
 
 SELECT TOP(1) @LID = LibraryId From @LIBRARY ORDER BY NEWID()
 DELETE @LIBRARY WHERE LibraryId = @LID
+
+INSERT INTO @MEMBER SELECT M.MemberId FROM [dbo].[Library] AS L
+	INNER JOIN [dbo].Membership AS M
+	ON M.LibraryId = L.LibraryId
+	WHERE L.LibraryId = @LID
+SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO @BOOK SELECT B.BookId FROM [dbo].Book AS B
 	INNER JOIN [dbo].Exist AS E
@@ -353,23 +411,33 @@ INSERT INTO @MEMBER SELECT M.MemberId FROM [dbo].[Library] AS L
 	ON M.LibraryId = L.LibraryId
 	WHERE L.LibraryId = @LID
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
 
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
 
 SELECT TOP(1) @BID = BookId From @BOOK ORDER BY NEWID()
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
 
 SELECT TOP(1) @LID = LibraryId From @LIBRARY ORDER BY NEWID()
 DELETE @LIBRARY WHERE LibraryId = @LID
+
+INSERT INTO @MEMBER SELECT M.MemberId FROM [dbo].[Library] AS L
+	INNER JOIN [dbo].Membership AS M
+	ON M.LibraryId = L.LibraryId
+	WHERE L.LibraryId = @LID
+SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO @BOOK SELECT B.BookId FROM [dbo].Book AS B
 	INNER JOIN [dbo].Exist AS E
@@ -381,28 +449,38 @@ INSERT INTO @MEMBER SELECT M.MemberId FROM [dbo].[Library] AS L
 	ON M.LibraryId = L.LibraryId
 	WHERE L.LibraryId = @LID
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
 
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
+
+INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
+VALUES (@LID, @BID, @MID)
+
+SELECT TOP(1) @BID = BookId From @BOOK ORDER BY NEWID()
+
+INSERT INTO @MEMBER SELECT M.MemberId FROM [dbo].[Library] AS L
+	INNER JOIN [dbo].Membership AS M
+	ON M.LibraryId = L.LibraryId
+	WHERE L.LibraryId = @LID
+SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
+
+INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
+VALUES (@LID, @BID, @MID)
+
+SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
 
 SELECT TOP(1) @BID = BookId From @BOOK ORDER BY NEWID()
 SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
-
-INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
-VALUES (@LID, @BID, @MID)
-
-SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
-
-INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
-VALUES (@LID, @BID, @MID)
-
-SELECT TOP(1) @BID = BookId From @BOOK ORDER BY NEWID()
-SELECT TOP(1) @MID = MemberId From @MEMBER ORDER BY NEWID()
+DELETE @MEMBER WHERE MemberId = @MID
 
 INSERT INTO [dbo].Borrow(LibraryId, BookId, MemberId)
 VALUES (@LID, @BID, @MID)
